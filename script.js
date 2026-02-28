@@ -38,7 +38,7 @@ const renderizarCards = (kitsData) => {
 
         return `
           <article class="card" data-type="${kit.type}">
-            <img class="card-image" src="${resolverImagem(kit.image)}" alt="Camisa ${formatarTipo(kit.type)} ${item.team} ${item.season}" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='${criarPlaceholderImagem(item.team, kit.type, item.season)}'" />
+            <img class="card-image" src="${criarPlaceholderImagem(item.team, kit.type, item.season)}" data-src="${resolverImagem(kit.image)}" alt="Camisa ${formatarTipo(kit.type)} ${item.team} ${item.season}" loading="lazy" decoding="async" />
             <span class="badge">${formatarTipo(kit.type)}</span>
             <h3>${item.team} ${formatarTipo(kit.type)} ${item.season}</h3>
             <p class="descricao">Marca: ${kit.brand}</p>
@@ -51,6 +51,27 @@ const renderizarCards = (kitsData) => {
     .join('');
 
   gridKits.innerHTML = cardsHtml;
+};
+
+
+const carregarImagensExternas = () => {
+  const imagens = document.querySelectorAll('.card-image[data-src]');
+
+  imagens.forEach((imagem) => {
+    const urlExterna = imagem.dataset.src;
+    if (!urlExterna) return;
+
+    const teste = new Image();
+    teste.referrerPolicy = 'no-referrer';
+    teste.onload = () => {
+      imagem.src = urlExterna;
+      imagem.removeAttribute('data-src');
+    };
+    teste.onerror = () => {
+      imagem.removeAttribute('data-src');
+    };
+    teste.src = urlExterna;
+  });
 };
 
 const aplicarFiltro = (tipo) => {
@@ -95,6 +116,7 @@ const iniciarCatalogo = async () => {
   try {
     const kitsData = await obterDadosCatalogo();
     renderizarCards(kitsData);
+    carregarImagensExternas();
     ativarFiltros();
 
     const filtroAtivo = document.querySelector('.filtro.ativo')?.dataset.filter ?? 'all';
