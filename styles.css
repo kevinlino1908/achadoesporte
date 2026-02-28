@@ -215,6 +215,10 @@ h1 {
   color: #dcfce7;
 }
 
+.card[hidden] {
+  display: none;
+}
+
 .footer {
   border-top: 1px solid var(--line);
   padding: 24px 0 40px;
