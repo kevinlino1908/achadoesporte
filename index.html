@@ -52,64 +52,16 @@
       <section id="catalogo" class="catalogo container">
         <div class="section-title">
           <h2>Catálogo em destaque</h2>
-          <p>Inspiração no estilo de posts do perfil com foco em camisas de futebol.</p>
+          <p>Camisas 2025 com imagens e valores organizados por tipo de uniforme.</p>
         </div>
-        <div class="filtros" role="tablist" aria-label="Filtrar por categoria">
+        <div class="filtros" role="tablist" aria-label="Filtrar por tipo de camisa">
           <button class="filtro ativo" data-filter="all">Todos</button>
-          <button class="filtro" data-filter="clubes">Clubes</button>
-          <button class="filtro" data-filter="selecoes">Seleções</button>
-          <button class="filtro" data-filter="retro">Retrô</button>
+          <button class="filtro" data-filter="home">Home</button>
+          <button class="filtro" data-filter="away">Away</button>
+          <button class="filtro" data-filter="third">Third</button>
         </div>
 
-        <div class="grid-cards">
-          <article class="card" data-category="clubes">
-            <span class="badge">Clubes</span>
-            <h3>Camisa Flamengo I 24/25</h3>
-            <p class="descricao">Modelo torcedor com tecido leve e escudo bordado.</p>
-            <p class="preco">R$ 149,90</p>
-            <a href="https://www.instagram.com/achadoesporte/" target="_blank" rel="noreferrer">Ver oferta</a>
-          </article>
-
-          <article class="card" data-category="clubes">
-            <span class="badge">Clubes</span>
-            <h3>Camisa Corinthians II 24/25</h3>
-            <p class="descricao">Versão away com caimento confortável para o dia a dia.</p>
-            <p class="preco">R$ 139,90</p>
-            <a href="https://www.instagram.com/achadoesporte/" target="_blank" rel="noreferrer">Ver oferta</a>
-          </article>
-
-          <article class="card" data-category="selecoes">
-            <span class="badge">Seleções</span>
-            <h3>Camisa Brasil I 24/25</h3>
-            <p class="descricao">Modelo clássico amarelo para coleção e jogos.</p>
-            <p class="preco">R$ 159,90</p>
-            <a href="https://www.instagram.com/achadoesporte/" target="_blank" rel="noreferrer">Ver oferta</a>
-          </article>
-
-          <article class="card" data-category="selecoes">
-            <span class="badge">Seleções</span>
-            <h3>Camisa Argentina I 24/25</h3>
-            <p class="descricao">Listras icônicas em versão torcedor com ótimo acabamento.</p>
-            <p class="preco">R$ 169,90</p>
-            <a href="https://www.instagram.com/achadoesporte/" target="_blank" rel="noreferrer">Ver oferta</a>
-          </article>
-
-          <article class="card" data-category="retro">
-            <span class="badge">Retrô</span>
-            <h3>Camisa Milan 06/07 Retrô</h3>
-            <p class="descricao">Modelo histórico inspirado na temporada campeã europeia.</p>
-            <p class="preco">R$ 189,90</p>
-            <a href="https://www.instagram.com/achadoesporte/" target="_blank" rel="noreferrer">Ver oferta</a>
-          </article>
-
-          <article class="card" data-category="retro">
-            <span class="badge">Retrô</span>
-            <h3>Camisa Barcelona 10/11 Retrô</h3>
-            <p class="descricao">Peça nostálgica para colecionadores e fãs do futebol clássico.</p>
-            <p class="preco">R$ 199,90</p>
-            <a href="https://www.instagram.com/achadoesporte/" target="_blank" rel="noreferrer">Ver oferta</a>
-          </article>
-        </div>
+        <div class="grid-cards" id="kits-grid"></div>
       </section>
     </main>
 
