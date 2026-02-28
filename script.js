@@ -1,17 +1,129 @@
+const DATA_URL = './kits-data.json';
+
 const botoesFiltro = document.querySelectorAll('.filtro');
-const cards = document.querySelectorAll('.card');
+const gridKits = document.querySelector('#kits-grid');
 
-botoesFiltro.forEach((botao) => {
-  botao.addEventListener('click', () => {
-    const categoria = botao.dataset.filter;
+const formatarTipo = (tipo) => tipo.charAt(0).toUpperCase() + tipo.slice(1);
+const formatarPreco = (preco) =>
+  preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
-    botoesFiltro.forEach((item) => item.classList.remove('ativo'));
-    botao.classList.add('ativo');
+const resolverImagem = (url) => {
+  if (!url.includes('/wiki/File:')) return url;
+  const nomeArquivo = url.split('/wiki/File:')[1];
+  return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(nomeArquivo)}`;
+};
 
-    cards.forEach((card) => {
-      const cardCategoria = card.dataset.category;
-      const exibir = categoria === 'all' || cardCategoria === categoria;
-      card.style.display = exibir ? 'flex' : 'none';
+const criarPlaceholderImagem = (time, tipo, temporada) => {
+  const titulo = `${time} • ${formatarTipo(tipo)} ${temporada}`;
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='640' height='420'><defs><linearGradient id='g' x1='0' x2='1' y1='0' y2='1'><stop offset='0%' stop-color='#111827'/><stop offset='100%' stop-color='#1f2937'/></linearGradient></defs><rect width='100%' height='100%' fill='url(#g)'/><text x='50%' y='46%' dominant-baseline='middle' text-anchor='middle' fill='#86efac' font-family='Inter,Arial,sans-serif' font-size='32' font-weight='700'>Camisa indisponível</text><text x='50%' y='58%' dominant-baseline='middle' text-anchor='middle' fill='#cbd5e1' font-family='Inter,Arial,sans-serif' font-size='22'>${titulo}</text></svg>`;
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+};
+
+const obterPreco = (item, tipo) => {
+  const precoNovo = item?.prices?.[tipo];
+  if (Number.isFinite(precoNovo)) return precoNovo;
+
+  const precoLegado = item?.price?.[tipo];
+  if (Number.isFinite(precoLegado)) return precoLegado;
+
+  return null;
+};
+
+const renderizarCards = (kitsData) => {
+  const cardsHtml = kitsData
+    .flatMap((item) =>
+      item.kits.map((kit) => {
+        const preco = obterPreco(item, kit.type);
+        const precoLabel = preco !== null ? formatarPreco(preco) : 'Preço indisponível';
+
+        return `
+          <article class="card" data-type="${kit.type}">
+            <img class="card-image" src="${criarPlaceholderImagem(item.team, kit.type, item.season)}" data-src="${resolverImagem(kit.image)}" alt="Camisa ${formatarTipo(kit.type)} ${item.team} ${item.season}" loading="lazy" decoding="async" />
+            <span class="badge">${formatarTipo(kit.type)}</span>
+            <h3>${item.team} ${formatarTipo(kit.type)} ${item.season}</h3>
+            <p class="descricao">Marca: ${kit.brand}</p>
+            <p class="preco">${precoLabel}</p>
+            <a href="https://www.instagram.com/achadoesporte/" target="_blank" rel="noreferrer">Ver oferta</a>
+          </article>
+        `;
+      })
+    )
+    .join('');
+
+  gridKits.innerHTML = cardsHtml;
+};
+
+
+const carregarImagensExternas = () => {
+  const imagens = document.querySelectorAll('.card-image[data-src]');
+
+  imagens.forEach((imagem) => {
+    const urlExterna = imagem.dataset.src;
+    if (!urlExterna) return;
+
+    const teste = new Image();
+    teste.referrerPolicy = 'no-referrer';
+    teste.onload = () => {
+      imagem.src = urlExterna;
+      imagem.removeAttribute('data-src');
+    };
+    teste.onerror = () => {
+      imagem.removeAttribute('data-src');
+    };
+    teste.src = urlExterna;
+  });
+};
+
+const aplicarFiltro = (tipo) => {
+  const cards = document.querySelectorAll('.card');
+
+  cards.forEach((card) => {
+    const tipoCard = card.dataset.type;
+    const exibir = tipo === 'all' || tipoCard === tipo;
+    card.hidden = !exibir;
+  });
+};
+
+const ativarFiltros = () => {
+  botoesFiltro.forEach((botao) => {
+    botao.addEventListener('click', () => {
+      const tipo = botao.dataset.filter;
+
+      botoesFiltro.forEach((item) => item.classList.remove('ativo'));
+      botao.classList.add('ativo');
+
+      aplicarFiltro(tipo);
     });
   });
-});
+};
+
+const exibirErro = () => {
+  gridKits.innerHTML = '<p class="erro-catalogo">Não foi possível carregar o catálogo agora. Verifique se o site está sendo servido por um servidor HTTP e tente novamente.</p>';
+};
+
+const obterDadosCatalogo = async () => {
+  try {
+    const resposta = await fetch(DATA_URL);
+    if (!resposta.ok) throw new Error('Falha no carregamento do JSON');
+    return await resposta.json();
+  } catch (erro) {
+    if (Array.isArray(window.KITS_DATA)) return window.KITS_DATA;
+    throw erro;
+  }
+};
+
+const iniciarCatalogo = async () => {
+  try {
+    const kitsData = await obterDadosCatalogo();
+    renderizarCards(kitsData);
+    carregarImagensExternas();
+    ativarFiltros();
+
+    const filtroAtivo = document.querySelector('.filtro.ativo')?.dataset.filter ?? 'all';
+    aplicarFiltro(filtroAtivo);
+  } catch (erro) {
+    exibirErro();
+  }
+};
+
+iniciarCatalogo();
