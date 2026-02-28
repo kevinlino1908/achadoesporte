@@ -19,12 +19,22 @@ const criarPlaceholderImagem = (time, tipo, temporada) => {
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 };
 
+const obterPreco = (item, tipo) => {
+  const precoNovo = item?.prices?.[tipo];
+  if (Number.isFinite(precoNovo)) return precoNovo;
+
+  const precoLegado = item?.price?.[tipo];
+  if (Number.isFinite(precoLegado)) return precoLegado;
+
+  return null;
+};
+
 const renderizarCards = (kitsData) => {
   const cardsHtml = kitsData
     .flatMap((item) =>
       item.kits.map((kit) => {
-        const preco = item.prices?.[kit.type];
-        const precoLabel = Number.isFinite(preco) ? formatarPreco(preco) : 'Preço indisponível';
+        const preco = obterPreco(item, kit.type);
+        const precoLabel = preco !== null ? formatarPreco(preco) : 'Preço indisponível';
 
         return `
           <article class="card" data-type="${kit.type}">
@@ -49,7 +59,7 @@ const aplicarFiltro = (tipo) => {
   cards.forEach((card) => {
     const tipoCard = card.dataset.type;
     const exibir = tipo === 'all' || tipoCard === tipo;
-    card.style.display = exibir ? 'flex' : 'none';
+    card.hidden = !exibir;
   });
 };
 
@@ -78,6 +88,9 @@ const iniciarCatalogo = async () => {
     const kitsData = await resposta.json();
     renderizarCards(kitsData);
     ativarFiltros();
+
+    const filtroAtivo = document.querySelector('.filtro.ativo')?.dataset.filter ?? 'all';
+    aplicarFiltro(filtroAtivo);
   } catch (erro) {
     exibirErro();
   }
