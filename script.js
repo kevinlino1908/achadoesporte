@@ -106,17 +106,8 @@ botoesFiltro.forEach((botao) => {
   botao.addEventListener('click', () => {
     const tipo = botao.dataset.filter;
 
-  cards.forEach((card) => {
-    const tipoCard = card.dataset.type;
-    const exibir = tipo === 'all' || tipoCard === tipo;
-    card.style.display = exibir ? 'flex' : 'none';
-  });
-};
-
-const ativarFiltros = () => {
-  botoesFiltro.forEach((botao) => {
-    botao.addEventListener('click', () => {
-      const tipo = botao.dataset.filter;
+    botoesFiltro.forEach((item) => item.classList.remove('ativo'));
+    botao.classList.add('ativo');
 
     aplicarFiltro(tipo);
   });
