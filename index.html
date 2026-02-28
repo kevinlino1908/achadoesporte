@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Achado Esporte | Catálogo de Camisas de Time</title>
+    <meta
+      name="description"
+      content="Catálogo de camisas de times de futebol com achados em modelos oficiais, torcedor e retrô."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="container">
+        <span class="tag">@achadoesporte</span>
+        <h1>Seu catálogo de camisas de futebol em um só lugar</h1>
+        <p>
+          Selecionamos achados de camisas de clubes e seleções com foco em
+          custo-benefício. Salve seus favoritos e acompanhe novos drops toda
+          semana.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://www.instagram.com/achadoesporte/" target="_blank" rel="noreferrer">Ver no Instagram</a>
+          <a class="btn btn-outline" href="#catalogo">Explorar catálogo</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="highlights container">
+        <article>
+          <h2>Camisas atualizadas</h2>
+          <p>Novidades frequentes para não perder promoção relâmpago.</p>
+        </article>
+        <article>
+          <h2>Curadoria de futebol</h2>
+          <p>Produtos pensados para torcedores, colecionadores e fanáticos.</p>
+        </article>
+        <article>
+          <h2>Links rápidos</h2>
+          <p>Encontre o item ideal e vá direto para compra em poucos cliques.</p>
+        </article>
+      </section>
+
+      <section id="catalogo" class="catalogo container">
+        <div class="section-title">
+          <h2>Catálogo em destaque</h2>
+          <p>Inspiração no estilo de posts do perfil com foco em camisas de futebol.</p>
+        </div>
+        <div class="filtros" role="tablist" aria-label="Filtrar por categoria">
+          <button class="filtro ativo" data-filter="all">Todos</button>
+          <button class="filtro" data-filter="clubes">Clubes</button>
+          <button class="filtro" data-filter="selecoes">Seleções</button>
+          <button class="filtro" data-filter="retro">Retrô</button>
+        </div>
+
+        <div class="grid-cards">
+          <article class="card" data-category="clubes">
+            <span class="badge">Clubes</span>
+            <h3>Camisa Flamengo I 24/25</h3>
+            <p class="descricao">Modelo torcedor com tecido leve e escudo bordado.</p>
+            <p class="preco">R$ 149,90</p>
+            <a href="https://www.instagram.com/achadoesporte/" target="_blank" rel="noreferrer">Ver oferta</a>
+          </article>
+
+          <article class="card" data-category="clubes">
+            <span class="badge">Clubes</span>
+            <h3>Camisa Corinthians II 24/25</h3>
+            <p class="descricao">Versão away com caimento confortável para o dia a dia.</p>
+            <p class="preco">R$ 139,90</p>
+            <a href="https://www.instagram.com/achadoesporte/" target="_blank" rel="noreferrer">Ver oferta</a>
+          </article>
+
+          <article class="card" data-category="selecoes">
+            <span class="badge">Seleções</span>
+            <h3>Camisa Brasil I 24/25</h3>
+            <p class="descricao">Modelo clássico amarelo para coleção e jogos.</p>
+            <p class="preco">R$ 159,90</p>
+            <a href="https://www.instagram.com/achadoesporte/" target="_blank" rel="noreferrer">Ver oferta</a>
+          </article>
+
+          <article class="card" data-category="selecoes">
+            <span class="badge">Seleções</span>
+            <h3>Camisa Argentina I 24/25</h3>
+            <p class="descricao">Listras icônicas em versão torcedor com ótimo acabamento.</p>
+            <p class="preco">R$ 169,90</p>
+            <a href="https://www.instagram.com/achadoesporte/" target="_blank" rel="noreferrer">Ver oferta</a>
+          </article>
+
+          <article class="card" data-category="retro">
+            <span class="badge">Retrô</span>
+            <h3>Camisa Milan 06/07 Retrô</h3>
+            <p class="descricao">Modelo histórico inspirado na temporada campeã europeia.</p>
+            <p class="preco">R$ 189,90</p>
+            <a href="https://www.instagram.com/achadoesporte/" target="_blank" rel="noreferrer">Ver oferta</a>
+          </article>
+
+          <article class="card" data-category="retro">
+            <span class="badge">Retrô</span>
+            <h3>Camisa Barcelona 10/11 Retrô</h3>
+            <p class="descricao">Peça nostálgica para colecionadores e fãs do futebol clássico.</p>
+            <p class="preco">R$ 199,90</p>
+            <a href="https://www.instagram.com/achadoesporte/" target="_blank" rel="noreferrer">Ver oferta</a>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <p>© 2026 Achado Esporte • Catálogo de camisas de futebol</p>
+        <a href="https://www.instagram.com/achadoesporte/" target="_blank" rel="noreferrer">Acompanhar perfil no Instagram</a>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
