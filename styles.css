@@ -256,3 +256,13 @@ h1 {
     grid-template-columns: 1fr;
   }
 }
+
+
+.erro-catalogo {
+  grid-column: 1 / -1;
+  border: 1px solid #7f1d1d;
+  background: rgba(127, 29, 29, 0.2);
+  color: #fecaca;
+  border-radius: 12px;
+  padding: 14px 16px;
+}
