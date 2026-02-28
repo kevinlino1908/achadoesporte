@@ -166,6 +166,16 @@ h1 {
   gap: 9px;
 }
 
+
+.card-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  background: #0b1120;
+}
+
 .badge {
   display: inline-block;
   width: fit-content;
